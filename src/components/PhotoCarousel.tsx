@@ -74,11 +74,9 @@ const PhotoCarousel = ({ photos, year, project }: Props) => {
         </CarouselContent>
 
         {photos.length > 1 && (
-          <CarouselPrevious variant="carousel" size="carousel" />
+          <CarouselPrevious variant="default" size="default" />
         )}
-        {photos.length > 1 && (
-          <CarouselNext variant="carousel" size="carousel" />
-        )}
+        {photos.length > 1 && <CarouselNext variant="default" size="default" />}
       </Carousel>
 
       <Carousel
