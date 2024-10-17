@@ -41,12 +41,10 @@ const Proyectos: React.FC = async () => {
         </div>
 
         <Link href="/" className="text-white text-2xl uppercase">
-          {/* Icono de cerrar para pantallas móviles */}
           <span className="block lg:hidden">
             <FaTimes className="text-2xl" />
           </span>
 
-          {/* Texto "CERRAR" visible solo en pantallas grandes */}
           <span className="hidden lg:block text-white text-xl uppercase border-b-2 border-white pb-1">
             CERRAR
           </span>
