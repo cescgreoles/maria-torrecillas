@@ -6,16 +6,13 @@ import { FaTimes } from "react-icons/fa";
 import path from "path";
 import { promises as fs } from "fs";
 
-// Esta función obtiene los proyectos desde el sistema de archivos
 async function getProjects() {
   const imageDir = path.join(process.cwd(), "public", "image");
 
-  // Leer los directorios de años
   const years = (await fs.readdir(imageDir)).filter(
     (name) => name !== ".DS_Store"
   );
 
-  // Obtener los proyectos por año
   const projects = await Promise.all(
     years.map(async (year) => {
       const yearDir = path.join(imageDir, year);
