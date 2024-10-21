@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import logo from "@/assets/logo.png";
 import Link from "next/link";
 import { FaTimes } from "react-icons/fa";
+import path from "path";
 import { promises as fs } from "fs";
+import logo from "@/assets/logo.png";
 import PhotoCarousel from "@/components/PhotoCarousel";
 
 interface Props {
@@ -13,11 +14,14 @@ interface Props {
   };
 }
 
+async function getProjectPhotos(year: string, project: string) {
+  const projectDir = path.join(process.cwd(), "public", "image", year, project);
+  const files = await fs.readdir(projectDir);
+  return files.filter((file) => file !== ".DS_Store");
+}
+
 const Proyecto = async ({ params: { year, project } }: Props) => {
-  const photos = (
-    await fs.readdir(process.cwd() + `/public/image/${year}/${project}`)
-  ).filter((name) => name !== ".DS_Store");
-  console.log(photos);
+  const photos = await getProjectPhotos(year, project);
 
   return (
     <div className="container mx-auto px-4 bg-black text-white">
@@ -37,7 +41,6 @@ const Proyecto = async ({ params: { year, project } }: Props) => {
           <span className="block lg:hidden">
             <FaTimes className="text-2xl" />
           </span>
-
           <span className="hidden lg:block">CERRAR</span>
         </Link>
       </header>
