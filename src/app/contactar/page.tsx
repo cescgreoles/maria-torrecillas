@@ -42,7 +42,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen relative flex items-center justify-center">
       <Image
-        src={"/photo1.JPG"}
+        src={"/photo1.jpg"}
         className="w-full h-full inset-0 object-cover object-center"
         fill
         alt="portada"
