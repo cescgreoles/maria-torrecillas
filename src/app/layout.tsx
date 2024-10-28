@@ -27,8 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
+        <link rel="icon" href="/logo.png" type="image/x-icon" />
         <link rel="icon" href="/logo.png" type="image/png" sizes="32x32" />
-        <link rel="icon" href="/logo.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/logo.png" sizes="180x180" />
       </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} bg-black`}>
         {children}

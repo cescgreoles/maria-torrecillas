@@ -73,7 +73,7 @@ const Proyectos: React.FC = async () => {
                     className="w-fit p-4 flex gap-2"
                   >
                     <Image
-                      src={`/image/${year}/${project}/1.JPG`}
+                      src={`/image/${year}/${project}/1.webp`}
                       alt={`Imagen del proyecto ${project} | ${year}`}
                       className="w-100 h-32 mr-2"
                       width={200}
