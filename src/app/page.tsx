@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 
-const images = ["/photo1.jpg", "/photo2.jpg", "/photo3.jpg", "/photo4.jpg"];
+const images = ["/photo1.webp", "/photo2.webp", "/photo3.webp", "/photo4.webp"];
 
 const Inicio = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
