@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
 import Navbar from "../components/Navbar";
+import imagePortada from "../../public/image/2016/1/1.webp";
 
 const projects = [
   { year: 2016, image: "/image/2016/1/1.webp" },
@@ -22,22 +23,24 @@ interface YearButtonsProps {
 
 const YearButtons = ({ onSelectYear, selectedYear }: YearButtonsProps) => {
   return (
-    <div className="flex justify-center mt-4 space-x-4">
+    <div className="absolute bottom-10 inset-x-0 flex justify-center space-x-4">
       {projects.map((project) => (
         <div
           key={project.year}
           className={`cursor-pointer transform transition duration-300 ease-in-out hover:scale-105 ${
-            selectedYear === project.year ? "border-4 border-blue-600" : ""
+            selectedYear === project.year ? "border-4 border-white" : ""
           }`}
           onClick={() => onSelectYear(project.year)}
         >
           <Image
             src={project.image}
             alt={`Project ${project.year}`}
-            className="w-32 h-32 object-cover rounded-md"
-            width={128}
-            height={128}
+            className="w-16 h-16 object-cover rounded-md"
+            width={64}
+            height={64}
             loading="lazy"
+            placeholder="blur"
+            blurDataURL="/path/to/lowres/image.webp"
           />
         </div>
       ))}
@@ -46,35 +49,21 @@ const YearButtons = ({ onSelectYear, selectedYear }: YearButtonsProps) => {
 };
 
 const Inicio = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % projects.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleSelectYear = (year: number) => {
-    if (selectedYear === year) {
-      // Navigate to the page if the same year is clicked again
-      window.location.href = `/${year}`;
-    } else {
-      // Set the selected year on first click
-      setSelectedYear(year);
-    }
+    setSelectedYear(year);
   };
 
   return (
     <div className="relative w-screen h-screen flex flex-col">
       <Image
-        src={projects[currentImageIndex].image}
+        src={imagePortada}
         className="w-full h-full inset-0 object-cover object-center absolute -z-20"
-        width={400}
-        height={300}
+        width={1920}
+        height={1080}
         alt="portada"
-        priority // Consider using priority for the background image
+        priority
       />
 
       <div className="absolute top-10 left-10">
@@ -83,19 +72,21 @@ const Inicio = () => {
       </div>
 
       <div className="flex flex-col justify-center items-center h-full px-4">
-        <Link href={"/proyectos"}>
-          <Image src={logo} alt="logo" className="w-12 mb-4" />
+        <Link href={`/${selectedYear}`}>
+          <Image src={logo} alt="logo" className="w-12 mb-4" priority />
+
+          {selectedYear && (
+            <p className="text-lg lg:text-xl text-white mt-2 cursor-pointer">
+              {selectedYear}
+            </p>
+          )}
         </Link>
-
-        {selectedYear && (
-          <p className="text-lg lg:text-xl text-white mt-2">{selectedYear}</p>
-        )}
-
-        <YearButtons
-          onSelectYear={handleSelectYear}
-          selectedYear={selectedYear}
-        />
       </div>
+
+      <YearButtons
+        onSelectYear={handleSelectYear}
+        selectedYear={selectedYear}
+      />
 
       <Navbar />
     </div>
