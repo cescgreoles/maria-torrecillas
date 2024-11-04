@@ -23,6 +23,7 @@ const PhotoCarousel = ({ photos, year, project }: Props) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [mainApi, setMainApi] = useState<CarouselApi>();
   const [thumbnailApi, setThumbnailApi] = useState<CarouselApi>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onThumbnailClick = useCallback(
     (index: number) => mainApi?.scrollTo(index),
@@ -34,6 +35,15 @@ const PhotoCarousel = ({ photos, year, project }: Props) => {
     setSelectedImageIndex(mainApi.selectedScrollSnap());
     thumbnailApi.scrollTo(mainApi.selectedScrollSnap());
   }, [mainApi, thumbnailApi]);
+
+  const openModal = (index: number) => {
+    setSelectedImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     if (!mainApi) return;
@@ -48,35 +58,32 @@ const PhotoCarousel = ({ photos, year, project }: Props) => {
   }, [mainApi, onImageSelect]);
 
   return (
-    <div className="w-full flex flex-col gap-4 ">
+    <div className="w-full flex flex-col gap-4">
       <Carousel
         opts={{ align: "start", loop: false }}
         className="w-2/3 mx-auto"
         setApi={setMainApi}
       >
         <CarouselContent className="w-full p-0 m-0">
-          {photos.map((photo) => {
-            return (
-              <CarouselItem
-                key={`main_${photo}`}
-                className="aspect-[3/2] rounded-md h-fit w-full basis-auto p-0 m-0"
-              >
-                <Image
-                  src={`/image/${year}/${project}/${photo}`}
-                  alt={`Imagen del proyecto ${project} | ${year}`}
-                  className="w-full rounded-md h-full mr-2 aspect-[3/2]"
-                  width={1000}
-                  height={600}
-                />
-              </CarouselItem>
-            );
-          })}
+          {photos.map((photo, i) => (
+            <CarouselItem
+              key={`main_${photo}`}
+              className="aspect-[3/2] rounded-md h-fit w-full basis-auto p-0 m-0"
+            >
+              <Image
+                src={`/image/${year}/${project}/${photo}`}
+                alt={`Imagen del proyecto ${project} | ${year}`}
+                className="w-full rounded-md h-full mr-2 aspect-[3/2] cursor-pointer"
+                width={1000}
+                height={600}
+                onClick={() => openModal(i)} // Abre el modal con la imagen seleccionada
+              />
+            </CarouselItem>
+          ))}
         </CarouselContent>
 
-        {photos.length > 1 && (
-          <CarouselPrevious variant="default" size="default" />
-        )}
-        {photos.length > 1 && <CarouselNext variant="default" size="default" />}
+        {photos.length > 1 && <CarouselPrevious />}
+        {photos.length > 1 && <CarouselNext />}
       </Carousel>
 
       <Carousel
@@ -110,6 +117,27 @@ const PhotoCarousel = ({ photos, year, project }: Props) => {
           ))}
         </CarouselContent>
       </Carousel>
+
+      {/* Modal para mostrar la imagen en pantalla completa */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-white text-2xl font-bold z-10"
+            >
+              &times;
+            </button>
+            <Image
+              src={`/image/${year}/${project}/${photos[selectedImageIndex]}`}
+              alt={`Imagen del proyecto ${project} | ${year}`}
+              width={1200}
+              height={800}
+              className="rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -46,7 +46,7 @@ const Navbar = () => {
             <Image src={logo} alt="logo" width={60} height={60} />
           </li>
 
-          <li>
+          {/* <li>
             <Link
               href="/proyectos"
               className="text-white text-2xl uppercase"
@@ -54,7 +54,7 @@ const Navbar = () => {
             >
               PROYECTOS
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               href="/contactar"
@@ -67,14 +67,14 @@ const Navbar = () => {
         </ul>
 
         <ul className="hidden lg:flex lg:flex-col lg:space-y-6 lg:items-center lg:justify-center lg:absolute lg:right-10 lg:top-10">
-          <li>
+          {/* <li>
             <Link
               href="/proyectos"
               className="text-white text-xl uppercase border-b-2 border-white pb-1"
             >
               PROYECTOS
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               href="/contactar"
