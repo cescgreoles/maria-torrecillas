@@ -12,13 +12,7 @@ export async function GET(request: Request) {
   }
 
   const imageDir = path.join(process.cwd(), "public", "image", year, project);
-
-  try {
-    const files = await fs.readdir(imageDir);
-    const photos = files.filter((name) => name.endsWith(".webp"));
-    return NextResponse.json(photos);
-  } catch (error) {
-    console.error("Error al leer las fotos del proyecto:", error);
-    return NextResponse.json([], { status: 404 });
-  }
+  const files = await fs.readdir(imageDir);
+  const photos = files.filter((name) => name.endsWith(".webp"));
+  return NextResponse.json(photos);
 }
